@@ -74,6 +74,13 @@ export default function App() {
     }));
   };
 
+  const handleReset = () => {
+    setStatus('playing');
+    setSelectedOption(null);
+    setAttempts(0);
+    localStorage.removeItem(`math-termo-${today}`);
+  };
+
   const shareResult = () => {
     const text = `Resolvi o MathTermo de hoje (${today})! 🧩✨\n${status === 'won' ? '✅ Acertei!' : '❌ Errei...'}\nJogue em: ${window.location.href}`;
     if (navigator.share) {
@@ -250,20 +257,27 @@ export default function App() {
                     </Markdown>
                   </div>
                   
-                  <div className="flex gap-3 pt-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
                     <button 
                       onClick={() => setShowStudy(true)}
-                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl font-bold transition-colors"
+                      className="flex items-center justify-center gap-2 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl font-bold transition-colors"
                     >
                       <BookOpen className="w-4 h-4" />
                       Estudar Tópico
                     </button>
                     <button 
+                      onClick={handleReset}
+                      className="flex items-center justify-center gap-2 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl font-bold transition-colors"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                      Tentar Novamente
+                    </button>
+                    <button 
                       onClick={shareResult}
-                      className="flex-1 flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition-colors"
+                      className="sm:col-span-2 flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition-colors"
                     >
                       <Share2 className="w-4 h-4" />
-                      Compartilhar
+                      Compartilhar Resultado
                     </button>
                   </div>
                 </motion.div>
